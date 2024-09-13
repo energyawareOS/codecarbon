@@ -1,3 +1,8 @@
+# codecarbon for EAOS
+
+- This tool aims to monitor energy & carbon emission based on mlco2 codecarbon
+- This is a development work done on behalf of EAOS(https://gitlab.com/energyawareOS) project
+
 ![banner](docs/edit/images/banner.png)
 
 Estimate and track carbon emissions from your computer, quantify and analyze their impact.
