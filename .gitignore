@@ -133,3 +133,6 @@ tests/test_data/rapl/*
 
 # credentials
 credentials.json
+
+#emacs
+*~
