@@ -10,13 +10,12 @@ add_library(codecarbon STATIC
 )
 
 target_include_directories(codecarbon PRIVATE ${PYTHON_INCLUDE_DIRS})
-target_compile_options(codecarbon PRIVATE -fPIC)  # -fPIE → -fPIC (for static lib)
+
+add_executable(carboneye carboneye.c)
 
 add_executable(test_libcodecarbon
   test_libcodecarbon.c
 )
 
-target_compile_options(test_libcodecarbon PRIVATE -fPIE)
-target_link_options(test_libcodecarbon PRIVATE -pie)
-
+target_link_libraries(carboneye PRIVATE codecarbon ${PYTHON_LIBRARIES})
 target_link_libraries(test_libcodecarbon PRIVATE codecarbon ${PYTHON_LIBRARIES} m)
