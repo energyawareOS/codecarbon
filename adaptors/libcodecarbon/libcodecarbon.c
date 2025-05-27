@@ -4,8 +4,8 @@ void
 init_libcodecarbon(void)
 {
 	Py_Initialize();
-	PyRun_SimpleString("from codecarbon import EmissionsTracker");
-	PyRun_SimpleString("tracker = EmissionsTracker()");
+
+	PyRun_SimpleString("from codecarbon import EmissionsTracker; tracker = EmissionsTracker()");
 }
 
 void
@@ -20,9 +20,16 @@ start_codecarbon(void)
 	PyRun_SimpleString("tracker.start()");
 }
 
-void
-end_codecarbon(void)
+double
+stop_codecarbon(void)
 {
 	PyRun_SimpleString("emissions: float = tracker.stop()");
-	PyRun_SimpleString("print(emissions)");
+
+	PyObject	*main_module = PyImport_AddModule("__main__");
+	PyObject	*dict = PyModule_GetDict(main_module);
+	PyObject	*py_emissions = PyDict_GetItemString(dict, "emissions");
+
+	if (py_emissions && PyFloat_Check(py_emissions))
+		return PyFloat_AsDouble(py_emissions);
+	return 0;
 }

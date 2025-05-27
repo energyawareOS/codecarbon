@@ -10,7 +10,7 @@ fini_libcodecarbon(void);
 void
 start_codecarbon(void);
 
-void
+double
 stop_codecarbon(void);
 
 #endif
