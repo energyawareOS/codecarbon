@@ -1,8 +1,16 @@
 #include <Python.h>
+#include <stdlib.h>
 
 void
 init_libcodecarbon(void)
 {
+	if (getenv("CODECARBON_LOG_LEVEL") == NULL) {
+		/* Suppress verbose output by setting log level to critical,
+		 * unless explicitly overridden by environment variable.
+		 */
+		setenv("CODECARBON_LOG_LEVEL", "critical", 1);
+	}
+
 	Py_Initialize();
 
 	PyRun_SimpleString("from codecarbon import EmissionsTracker; tracker = EmissionsTracker()");
