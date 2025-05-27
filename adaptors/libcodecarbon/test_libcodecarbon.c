@@ -44,7 +44,7 @@ do_computation(void)
 void
 main(int argc, char *argv[])
 {
-	double	energy;
+	codecarbon_result_t	res;
 
 	if (argc > 1) {
 		duration = atoi(argv[1]);
@@ -55,9 +55,10 @@ main(int argc, char *argv[])
 
 	(void)do_computation();
 
-	energy = stop_codecarbon();
+	stop_codecarbon(&res);
 
-	printf("Energy used: %lf(kWh)\n", energy);
+	printf("Energy used: %lf(kWh)\n", res.energy);
+	printf("Carbon used: %lf(gCO2eq)\n", res.carbon);
 
 	fini_libcodecarbon();
 }

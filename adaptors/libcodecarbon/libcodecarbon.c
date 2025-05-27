@@ -1,6 +1,8 @@
 #include <Python.h>
 #include <stdlib.h>
 
+#include "libcodecarbon.h"
+
 void
 init_libcodecarbon(void)
 {
@@ -28,16 +30,20 @@ start_codecarbon(void)
 	PyRun_SimpleString("tracker.start()");
 }
 
-double
-stop_codecarbon(void)
+int
+stop_codecarbon(codecarbon_result_t *pres)
 {
-	PyRun_SimpleString("emissions: float = tracker.stop()");
+	PyRun_SimpleString("carbon: float = tracker.stop() * 1000; energy: float = tracker._total_energy.kWh");
 
 	PyObject	*main_module = PyImport_AddModule("__main__");
 	PyObject	*dict = PyModule_GetDict(main_module);
-	PyObject	*py_emissions = PyDict_GetItemString(dict, "emissions");
+	PyObject	*py_carbon = PyDict_GetItemString(dict, "carbon");
+	PyObject	*py_energy = PyDict_GetItemString(dict, "energy");
 
-	if (py_emissions && PyFloat_Check(py_emissions))
-		return PyFloat_AsDouble(py_emissions);
-	return 0;
+	if (py_carbon && py_energy && PyFloat_Check(py_carbon) && PyFloat_Check(py_energy)) {
+		pres->carbon = PyFloat_AsDouble(py_carbon);
+		pres->energy = PyFloat_AsDouble(py_energy);
+		return 0;
+	}
+	return -1;
 }
