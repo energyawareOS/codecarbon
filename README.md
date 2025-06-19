@@ -2,6 +2,7 @@
 
 - This tool aims to monitor energy & carbon emission based on mlco2 codecarbon
 - This is a development work done on behalf of EAOS(https://gitlab.com/energyawareOS) project
+- [libcodecarbon](adators/libcodecarbon) allows C programs to integrate with codecarbon
 
 ![banner](docs/edit/images/banner.png)
 
